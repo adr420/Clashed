@@ -9,7 +9,7 @@ SDL_Texture* LoadImage(const char *path,SDL_Renderer *ren)
     return imgTx;
 }
 
-ImageView* CreateImageView(const char *path,SDL_Renderer *ren,SDL_Rect imgRect,SDL_Rect dstRect)
+ImageView* CreateImageView(const char *path,SDL_Renderer *ren,SDL_Rect *imgRect,SDL_Rect *dstRect)
 {
     ImageView *imgV = (ImageView*)malloc(sizeof(ImageView));
     imgV->path = path;
@@ -22,7 +22,7 @@ ImageView* CreateImageView(const char *path,SDL_Renderer *ren,SDL_Rect imgRect,S
 
 void RenderImageView(SDL_Renderer *ren,ImageView *iv)
 {
-    SDL_RenderCopy(ren,iv->imgTx,&iv->srcRect,&iv->dstRect);
+    SDL_RenderCopy(ren,iv->imgTx,iv->srcRect,iv->dstRect);
 }
 
 void DeleteImageView(ImageView* imgV)

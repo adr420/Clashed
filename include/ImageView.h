@@ -7,13 +7,13 @@
 typedef struct image_view {
     const char *path;
     SDL_Texture *imgTx;
-    SDL_Rect srcRect;
-    SDL_Rect dstRect;
+    SDL_Rect *srcRect;
+    SDL_Rect *dstRect;
 }ImageView;
 
 SDL_Texture* LoadImage(const char *path,SDL_Renderer *ren);
 
-ImageView* CreateImageView(const char *path,SDL_Renderer *ren,SDL_Rect imgRect,SDL_Rect dstRect);
+ImageView* CreateImageView(const char *path,SDL_Renderer *ren,SDL_Rect *imgRect,SDL_Rect *dstRect);
 
 void RenderImageView(SDL_Renderer *ren,ImageView *iv);
 

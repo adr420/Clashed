@@ -6,10 +6,14 @@
 #include "Map.h"
 #include "Util.h"
 #include "ImageView.h"
+#include <Player.h>
 
 
 int main(int ac,char **argv)
 {
+    extern Player user,comp;
+    extern int gameOver;
+
     if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
         printf("SDL_Error: %s",SDL_GetError());
@@ -35,17 +39,21 @@ int main(int ac,char **argv)
                     running = false;
                 break;
 
-                case SDL_KEYDOWN:
+                case (SDL_KEYDOWN):
                 {
-                    char key = GetKeyPressed(ev.key);
-                    if (key == 'r')
-                    MoveMap(MAP_DIR_RIGHT);
-                    if (key == 'u')
-                    MoveMap(MAP_DIR_UP);
-                    if (key == 'd')
-                    MoveMap(MAP_DIR_DOWN);
-                    if (key == 'l')
-                    MoveMap(MAP_DIR_LEFT);
+                    if (!gameOver){
+                        char key = GetKeyPressed(ev.key);
+                        if (key == 'r')
+                        MoveMap(MAP_DIR_RIGHT);
+                        if (key == 'u')
+                        MoveMap(MAP_DIR_UP);
+                        if (key == 'd')
+                        MoveMap(MAP_DIR_DOWN);
+                        if (key == 'l')
+                        MoveMap(MAP_DIR_LEFT);
+                        if(key == 's')
+                        PlayerAttack(ren,&user,'u');
+                    }
                 }
                 break;
 
@@ -57,9 +65,12 @@ int main(int ac,char **argv)
         SDL_SetRenderDrawColor(ren,0,0,0,255);
         SDL_RenderClear(ren);
 
-
-        RenderMap(ren);
-
+        if (gameOver)
+        {
+            GameOver(ren);
+        }else{
+            RenderMap(ren);
+        }
         SDL_RenderPresent(ren);
         SDL_Delay(17);
     }
